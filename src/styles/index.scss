@@ -1,0 +1,20 @@
+@import "./reset.css";
+@import "./utils.scss";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  background-color: $background-black;
+}
+
+button {
+  cursor: pointer;
+}
