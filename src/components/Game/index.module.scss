@@ -1,0 +1,53 @@
+@import "../../styles/utils.scss";
+
+.container {
+  background-color: $background-gray;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.header {
+  position: relative;
+  height: 20px;
+}
+
+.headerItem {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.modeOptions {
+  position: absolute;
+  width: 100px;
+  left: 10px;
+  top: 30px;
+  background-color: $background-gray;
+  border: 1px solid $border-gray;
+}
+
+.modeOption {
+  display: flex;
+  column-gap: 2px;
+}
+
+.optionIcon {
+  width: 10px;
+  height: 10px;
+  background-image: url("../../resources/notchecked.gif");
+
+  .current & {
+    background-image: url("../../resources/checked.gif");
+  }
+}
+
+.optionText {
+  &:hover {
+    color: $font-blue;
+  }
+}
+
+.border {
+  padding: 10px;
+  border: 1px solid $border-gray;
+}

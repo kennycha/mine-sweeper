@@ -1,0 +1,7 @@
+@import "../../styles//utils.scss";
+
+.container {
+  @include flex-center;
+  width: 100vw;
+  height: 100vh;
+}

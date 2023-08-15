@@ -1,5 +1,15 @@
+import Game from "../Game";
+import styles from "./index.module.scss";
+import classNames from "classnames/bind";
+
+const cx = classNames.bind(styles);
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <div className={cx("container")}>
+      <Game />
+    </div>
+  );
 };
 
 export default App;
