@@ -23,7 +23,7 @@
   background: url("../../resources/time0.gif") no-repeat;
 }
 
-.startButton {
+.resetButton {
   width: 26px;
   height: 26px;
 
@@ -45,7 +45,7 @@
 }
 
 .gameTableWrapper {
-  padding: 8px;
+  padding-top: 8px;
   background-color: $background-gray;
   border: 1px solid $border-gray;
 }
@@ -54,6 +54,7 @@
   display: flex;
   flex-wrap: wrap;
   border: 1px solid $border-gray;
+  overflow-y: hidden;
 }
 
 .cell {
@@ -62,7 +63,33 @@
   background: url("../../resources/blank.gif") no-repeat center;
 
   &.opened {
-    background: url("../../resources/open0.gif") no-repeat center;
+    &.open0 {
+      background: url("../../resources/open0.gif") no-repeat center;
+    }
+    &.open1 {
+      background: url("../../resources/open1.gif") no-repeat center;
+    }
+    &.open2 {
+      background: url("../../resources/open2.gif") no-repeat center;
+    }
+    &.open3 {
+      background: url("../../resources/open3.gif") no-repeat center;
+    }
+    &.open4 {
+      background: url("../../resources/open4.gif") no-repeat center;
+    }
+    &.open5 {
+      background: url("../../resources/open5.gif") no-repeat center;
+    }
+    &.open6 {
+      background: url("../../resources/open6.gif") no-repeat center;
+    }
+    &.open7 {
+      background: url("../../resources/open7.gif") no-repeat center;
+    }
+    &.open8 {
+      background: url("../../resources/open8.gif") no-repeat center;
+    }
   }
 
   &.hasFlag {

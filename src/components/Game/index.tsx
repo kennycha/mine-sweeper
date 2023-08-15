@@ -5,14 +5,20 @@ import { GameModeTypes } from "../../types";
 import { firstUpperCase } from "../../utils";
 import Board from "../Board";
 import { useOutsideClick } from "../../hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { changeMode } from "../../features/game";
 
 const cx = classNames.bind(styles);
 
 const GAME_MODES: GameModeTypes[] = ["beginner", "intermediate", "expert", "custom"];
 
 const Game = () => {
+  const gameMode = useSelector((state: RootState) => state.game.mode);
+
+  const dispatch = useDispatch();
+
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
-  const [currentGameMode, setCurrentGameMode] = useState<GameModeTypes>("beginner");
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +31,7 @@ const Game = () => {
       // @TODO modal로 custom 설정
       // w, h는 8-100, count는 최대 (w * h) / 3
     } else {
-      setCurrentGameMode(mode);
+      dispatch(changeMode({ mode }));
       setIsHeaderOpen(false);
     }
   };
@@ -43,15 +49,15 @@ const Game = () => {
         </div>
         {isHeaderOpen && (
           <ul className={cx("modeOptions")}>
-            {GAME_MODES.map((gameMode) => {
+            {GAME_MODES.map((mode) => {
               return (
                 <li
-                  key={gameMode}
-                  className={cx("modeOption", { current: currentGameMode === gameMode })}
-                  onClick={() => handleModeOptionClick(gameMode)}
+                  key={mode}
+                  className={cx("modeOption", { current: gameMode === mode })}
+                  onClick={() => handleModeOptionClick(mode)}
                 >
                   <div className={cx("optionIcon")} />
-                  <p className={cx("optionText")}>{firstUpperCase(gameMode)}</p>
+                  <p className={cx("optionText")}>{firstUpperCase(mode)}</p>
                 </li>
               );
             })}
