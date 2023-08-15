@@ -33,7 +33,11 @@
     background: url("../../resources/facesmile.gif") no-repeat center;
   }
 
-  .fail & > div {
+  .success & > div {
+    background: url("../../resources/facewin.gif") no-repeat center;
+  }
+
+  .failed & > div {
     background: url("../../resources/facedead.gif") no-repeat center;
   }
 }
@@ -100,7 +104,7 @@
     background: url("../../resources/bombdeath.gif") no-repeat center !important;
   }
 
-  .fail &.hasMine {
+  .failed &.hasMine {
     background: url("../../resources/bombrevealed.gif") no-repeat center;
   }
 }

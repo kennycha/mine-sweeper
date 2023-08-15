@@ -192,7 +192,7 @@ const Board = () => {
   }, []);
 
   return (
-    <div className={cx("container", { fail: gamePhase === "failed" })}>
+    <div className={cx("container", gamePhase)}>
       <div className={cx("controls")}>
         <div className={cx("endTimer")}>
           <div className={cx("time")} />
