@@ -51,3 +51,40 @@
   padding: 10px;
   border: 1px solid $border-gray;
 }
+
+.modalInner {
+  width: 180px;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: $background-gray;
+  border: 2px solid $border-gray;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.141), 0 1px 3px 0 rgba(0, 0, 0, 0.122);
+}
+
+.errorWrapper {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  padding: 6px;
+  row-gap: 4px;
+  margin-bottom: 10px;
+}
+
+.inputs {
+  display: grid;
+  padding: 6px;
+  grid-template-columns: 50px 80px;
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.buttonWrapper {
+  @include flex-center;
+  width: 100%;
+}
+
+.button {
+  border: 1px solid $border-gray;
+  width: 50px;
+}

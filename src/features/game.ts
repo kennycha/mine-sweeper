@@ -31,6 +31,7 @@ export const gameSlice = createSlice({
         state.mode = mode;
         state.config = GAME_CONFIG_PRESETS[mode];
       }
+      state.phase = "ready";
     },
   },
 });
