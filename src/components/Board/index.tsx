@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import classNames from "classnames/bind";
 import { Cell, Nullable } from "../../types";
@@ -76,11 +76,40 @@ const Board = () => {
 
   const dispatch = useDispatch();
 
+  const [currentTime, setCurrentTime] = useState(0);
   const [cells, setCells] = useState(createCells(gameConfig.width, gameConfig.height));
   const [restCellCount, setRestCellCount] = useState(gameConfig.width * gameConfig.height);
   const mineCheckArray = useRef<Nullable<number[][]>>(null);
   const mineCountArray = useRef<Nullable<number[][]>>(null);
   const visitCheckArray = useRef<Nullable<boolean[][]>>(null);
+
+  const currentTimeArray = useMemo(() => {
+    if (currentTime < 10) {
+      return [0, 0, 0, 0, 0, currentTime.toString()];
+    } else if (currentTime < 100) {
+      return [0, 0, 0, 0, ...currentTime.toString().split("")];
+    } else if (currentTime < 1000) {
+      return [0, 0, 0, ...currentTime.toString().split("")];
+    } else if (currentTime < 10000) {
+      return [0, 0, ...currentTime.toString().split("")];
+    } else if (currentTime < 100000) {
+      return [0, ...currentTime.toString().split("")];
+    } else {
+      return currentTime.toString().split("");
+    }
+  }, [currentTime]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (gamePhase === "playing") {
+        setCurrentTime((prev) => prev + 1);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, [gamePhase]);
 
   const resetGame = useCallback(() => {
     dispatch(changePhase("ready"));
@@ -105,6 +134,7 @@ const Board = () => {
 
   // 게임 상단 중앙의 얼굴 버튼을 눌러서 게임 초기화
   const handleResetButtonClick = useCallback(() => {
+    setCurrentTime(0);
     resetGame();
   }, [resetGame]);
 
@@ -165,6 +195,7 @@ const Board = () => {
       } else {
         if (gamePhase === "ready") {
           // 게임 준비단계라면(클릭을 한 번도 하지 않은 상태라면) 상태를 진행으로 바꾸고, 지뢰를 배치
+          setCurrentTime(0);
           dispatch(changePhase("playing"));
           mineCheckArray.current = createMineCheckArray(i, j, gameConfig.width, gameConfig.height, gameConfig.count);
           mineCountArray.current = createMineCountArray(mineCheckArray.current);
@@ -212,17 +243,17 @@ const Board = () => {
     <div className={cx("container", gamePhase)}>
       <div className={cx("controls")}>
         <div className={cx("endTimer")}>
-          <div className={cx("time")} />
-          <div className={cx("time")} />
-          <div className={cx("time")} />
+          <div className={cx("time", `time${currentTimeArray[0]}`)} />
+          <div className={cx("time", `time${currentTimeArray[1]}`)} />
+          <div className={cx("time", `time${currentTimeArray[2]}`)} />
         </div>
         <div className={cx("resetButton")} onClick={() => handleResetButtonClick()}>
           <div />
         </div>
         <div className={cx("currentTimer")}>
-          <div className={cx("time")} />
-          <div className={cx("time")} />
-          <div className={cx("time")} />
+          <div className={cx("time", `time${currentTimeArray[3]}`)} />
+          <div className={cx("time", `time${currentTimeArray[4]}`)} />
+          <div className={cx("time", `time${currentTimeArray[5]}`)} />
         </div>
       </div>
       <div className={cx("gameTableWrapper")}>

@@ -1,8 +1,5 @@
 @import "../../styles/utils.scss";
 
-.container {
-}
-
 .controls {
   display: flex;
   justify-content: space-between;
@@ -21,6 +18,39 @@
   width: 13px;
   height: 23px;
   background: url("../../resources/time0.gif") no-repeat;
+
+  :not(.ready) & {
+    &.time0 {
+      background: url("../../resources/time0.gif") no-repeat;
+    }
+    &.time1 {
+      background: url("../../resources/time1.gif") no-repeat;
+    }
+    &.time2 {
+      background: url("../../resources/time2.gif") no-repeat;
+    }
+    &.time3 {
+      background: url("../../resources/time3.gif") no-repeat;
+    }
+    &.time4 {
+      background: url("../../resources/time4.gif") no-repeat;
+    }
+    &.time5 {
+      background: url("../../resources/time5.gif") no-repeat;
+    }
+    &.time6 {
+      background: url("../../resources/time6.gif") no-repeat;
+    }
+    &.time7 {
+      background: url("../../resources/time7.gif") no-repeat;
+    }
+    &.time8 {
+      background: url("../../resources/time8.gif") no-repeat;
+    }
+    &.time9 {
+      background: url("../../resources/time9.gif") no-repeat;
+    }
+  }
 }
 
 .resetButton {
