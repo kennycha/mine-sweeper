@@ -70,9 +70,9 @@ const Game = () => {
   const handleApplyButtonClick = () => {
     if (
       customWidth >= 8 &&
-      customWidth <= 100 &&
+      customWidth <= 50 &&
       customHeight >= 8 &&
-      customHeight <= 100 &&
+      customHeight <= 50 &&
       customCount >= 1 &&
       customCount < (customWidth * customHeight) / 3
     ) {
@@ -127,8 +127,8 @@ const Game = () => {
             {hasError ? (
               <div className={cx("errorWrapper")}>
                 <p className={cx("errorText")}>You can apply</p>
-                <p className={cx("errorText")}>Width: 8 to 100</p>
-                <p className={cx("errorText")}>Height: 8 to 100</p>
+                <p className={cx("errorText")}>Width: 8 to 50</p>
+                <p className={cx("errorText")}>Height: 8 to 50</p>
                 <p className={cx("errorText")}>Count: 1 to 1/3 of squares</p>
               </div>
             ) : (

@@ -108,10 +108,12 @@ const Board = () => {
     resetGame();
   }, [resetGame]);
 
-  // @TODO 큰 사이즈에서 마인 배치에 따라(?) maximum callstack 발생 -> 해결 중
+  // @TODO 50x50 이상의 큰 사이즈에서 maximum callback 발생
   const updateTargetCells = useCallback(
     (i: number, j: number, res: [number, number][]) => {
       if (!mineCheckArray.current || !mineCountArray.current || !visitCheckArray.current) return;
+      // 로그 제거하면 2000번 이상의 재귀 호출에서 maximum callback 발생
+      console.log(i, j);
 
       res.push([i, j]);
       visitCheckArray.current![i][j] = true;
@@ -130,6 +132,8 @@ const Board = () => {
           !visitCheckArray.current![nextI][nextJ]
         ) {
           updateTargetCells(nextI, nextJ, res);
+        } else {
+          return;
         }
       });
     },
