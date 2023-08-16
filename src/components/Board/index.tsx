@@ -108,6 +108,7 @@ const Board = () => {
     resetGame();
   }, [resetGame]);
 
+  // @TODO 큰 사이즈에서 마인 배치에 따라(?) maximum callstack 발생 -> 해결 중
   const updateTargetCells = useCallback(
     (i: number, j: number, res: [number, number][]) => {
       if (!mineCheckArray.current || !mineCountArray.current || !visitCheckArray.current) return;
