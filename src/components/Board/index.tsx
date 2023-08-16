@@ -108,34 +108,47 @@ const Board = () => {
     resetGame();
   }, [resetGame]);
 
-  // @TODO 50x50 이상의 큰 사이즈에서 maximum callback 발생
-  const updateTargetCells = useCallback(
-    (i: number, j: number, res: [number, number][]) => {
-      if (!mineCheckArray.current || !mineCountArray.current || !visitCheckArray.current) return;
-      // 로그 제거하면 2000번 이상의 재귀 호출에서 maximum callback 발생
-      console.log(i, j);
+  const getTargetCells = useCallback(
+    (i: number, j: number) => {
+      // 반환할 셀의 i, j
+      const result: [number, number][] = [];
 
-      res.push([i, j]);
-      visitCheckArray.current![i][j] = true;
+      if (!mineCheckArray.current || !mineCountArray.current || !visitCheckArray.current) {
+        return result;
+      }
 
-      if (mineCountArray.current[i][j] !== 0) return;
+      // while 문 내부에서 업데이트 할 배열
+      const inner: [number, number][] = [];
 
-      ALL_DIRECTIONS.forEach(([di, dj]) => {
-        const nextI = i + di;
-        const nextJ = j + dj;
-        if (
-          nextI >= 0 &&
-          nextI < gameConfig.height &&
-          nextJ >= 0 &&
-          nextJ < gameConfig.width &&
-          !mineCheckArray.current![nextI][nextJ] &&
-          !visitCheckArray.current![nextI][nextJ]
-        ) {
-          updateTargetCells(nextI, nextJ, res);
-        } else {
-          return;
+      inner.push([i, j]);
+
+      while (inner.length > 0) {
+        // 첫번째 요소를 빼와서 검사
+        const [innerI, innerJ] = inner.shift()!;
+
+        // 범위 밖인 경우
+        if (innerI < 0 || innerI >= gameConfig.height || innerJ < 0 || innerJ >= gameConfig.width) {
+          continue;
         }
-      });
+
+        // 이미 방문한 경우
+        if (visitCheckArray.current[innerI][innerJ]) {
+          continue;
+        }
+
+        // 해당 셀에 지뢰가 없고, 해당 셀 주변에도 지뢰가 없는 경우 주변 셀들을 inner에 추가
+        if (!mineCheckArray.current[innerI][innerJ] && mineCountArray.current[innerI][innerJ] === 0) {
+          ALL_DIRECTIONS.forEach(([di, dj]) => {
+            inner.push([innerI + di, innerJ + dj]);
+          });
+        }
+
+        // 반환할 배열에 담고, 방문 표시
+        result.push([innerI, innerJ]);
+        visitCheckArray.current[innerI][innerJ] = true;
+      }
+
+      return result;
     },
     [gameConfig.height, gameConfig.width]
   );
@@ -163,8 +176,7 @@ const Board = () => {
             dispatch(changePhase("failed"));
           }
           // 업데이트 처리할 셀들의 [i, j]가 담긴 배열 업데이트
-          const targetCells: [number, number][] = [];
-          updateTargetCells(i, j, targetCells);
+          const targetCells = getTargetCells(i, j);
           // 한 번에 업데이트
           setCells((prev) =>
             prev.map((cell) => {
@@ -180,7 +192,7 @@ const Board = () => {
         }
       }
     },
-    [dispatch, gameConfig.count, gameConfig.height, gameConfig.width, gamePhase, updateTargetCells]
+    [dispatch, gameConfig.count, gameConfig.height, gameConfig.width, gamePhase, getTargetCells]
   );
 
   useEffect(() => {
