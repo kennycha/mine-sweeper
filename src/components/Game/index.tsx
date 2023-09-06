@@ -1,4 +1,4 @@
-import { FocusEventHandler, useCallback, useRef, useState } from "react";
+import { FocusEventHandler, useCallback, useMemo, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import classNames from "classnames/bind";
 import { GameModeTypes } from "../../types";
@@ -16,6 +16,11 @@ const GAME_MODES: GameModeTypes[] = ["beginner", "intermediate", "expert", "cust
 const DEFAULT_WIDTH = 8;
 const DEFAULT_HEIGHT = 8;
 const DEFAULT_COUNT = 10;
+const MIN_WIDTH = 8;
+const MAX_WIDTH = 50;
+const MIN_HEIGHT = 8;
+const MAX_HEIGHT = 50;
+const MIN_COUNT = 1;
 
 const Game = () => {
   const gameMode = useSelector((state: RootState) => state.game.mode);
@@ -28,6 +33,8 @@ const Game = () => {
   const [customHeight, setCustomHeight] = useState(DEFAULT_HEIGHT);
   const [customCount, setCustomCount] = useState(DEFAULT_COUNT);
   const [hasError, setHasError] = useState(false);
+
+  const maxCount = useMemo(() => Math.floor((customWidth * customHeight) / 3), [customHeight, customWidth]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -69,12 +76,12 @@ const Game = () => {
 
   const handleApplyButtonClick = () => {
     if (
-      customWidth >= 8 &&
-      customWidth <= 50 &&
-      customHeight >= 8 &&
-      customHeight <= 50 &&
-      customCount >= 1 &&
-      customCount < (customWidth * customHeight) / 3
+      customWidth >= MIN_WIDTH &&
+      customWidth <= MAX_WIDTH &&
+      customHeight >= MIN_HEIGHT &&
+      customHeight <= MAX_HEIGHT &&
+      customCount >= MIN_COUNT &&
+      customCount <= maxCount
     ) {
       setHasError(false);
       dispatch(
@@ -134,11 +141,32 @@ const Game = () => {
             ) : (
               <div className={cx("inputs")}>
                 <label htmlFor="customWidth">Width:</label>
-                <input id="customWidth" defaultValue={customWidth} type="number" onBlur={handleWidthInputBlur} />
+                <input
+                  id="customWidth"
+                  min={MIN_WIDTH}
+                  max={MAX_WIDTH}
+                  defaultValue={customWidth}
+                  type="number"
+                  onBlur={handleWidthInputBlur}
+                />
                 <label htmlFor="customHeight">Height:</label>
-                <input id="customHeight" defaultValue={customHeight} type="number" onBlur={handleHeightInputBlur} />
+                <input
+                  id="customHeight"
+                  min={MIN_HEIGHT}
+                  max={MAX_HEIGHT}
+                  defaultValue={customHeight}
+                  type="number"
+                  onBlur={handleHeightInputBlur}
+                />
                 <label htmlFor="customCount">Count:</label>
-                <input id="customCount" defaultValue={customCount} type="number" onBlur={handleCountInputBlur} />
+                <input
+                  id="customCount"
+                  min={MIN_COUNT}
+                  max={maxCount}
+                  defaultValue={customCount}
+                  type="number"
+                  onBlur={handleCountInputBlur}
+                />
               </div>
             )}
             <div className={cx("buttonWrapper")}>
