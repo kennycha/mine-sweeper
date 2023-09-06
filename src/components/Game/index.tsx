@@ -118,7 +118,7 @@ const Game = () => {
           </ul>
         )}
       </div>
-      <div className={cx("border")}>
+      <div className={cx("board")}>
         <Board />
       </div>
       {isModalOpen && (
