@@ -1,6 +1,6 @@
-import { GameConfig } from "./types";
+import { GameConfig, GameModeTypes } from "./types";
 
-export const GAME_CONFIG_PRESETS: { [key: string]: GameConfig } = {
+export const GAME_CONFIG_PRESETS: { [key in Exclude<GameModeTypes, "custom">]: GameConfig } = {
   beginner: { width: 8, height: 8, count: 10 },
   intermediate: { width: 16, height: 16, count: 40 },
   expert: { width: 32, height: 16, count: 100 },
