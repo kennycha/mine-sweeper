@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import styles from "./index.module.scss";
 import classNames from "classnames/bind";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, memo } from "react";
 import DeleteButton from "../DeleteButton";
 
 const cx = classNames.bind(styles);
@@ -10,7 +10,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const Modal = ({ onClose, children }: PropsWithChildren<ModalProps>) => {
+const Modal = memo(({ onClose, children }: PropsWithChildren<ModalProps>) => {
   return createPortal(
     <div className={cx("container")}>
       <div className={cx("backdrop")} onClick={onClose} />
@@ -23,6 +23,6 @@ const Modal = ({ onClose, children }: PropsWithChildren<ModalProps>) => {
     </div>,
     document.body
   );
-};
+});
 
 export default Modal;

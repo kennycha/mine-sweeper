@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styles from "./index.module.scss";
 import classNames from "classnames/bind";
 
@@ -7,7 +8,7 @@ interface DeleteButtonProps {
   onClick: () => void;
 }
 
-const DeleteButton = ({ onClick }: DeleteButtonProps) => {
+const DeleteButton = memo(({ onClick }: DeleteButtonProps) => {
   const handleClick = () => {
     onClick();
   };
@@ -17,6 +18,6 @@ const DeleteButton = ({ onClick }: DeleteButtonProps) => {
       <div className={cx("icon")} />
     </button>
   );
-};
+});
 
 export default DeleteButton;

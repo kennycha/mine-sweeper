@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import classNames from "classnames/bind";
 import { Cell, Nullable } from "../../types";
@@ -70,7 +70,7 @@ const createVisitCheckArray = (width: number, height: number) => {
     .map(() => Array(width).fill(false));
 };
 
-const Board = () => {
+const Board = memo(() => {
   const gamePhase = useSelector((state: RootState) => state.game.phase);
   const gameConfig = useSelector((state: RootState) => state.game.config);
 
@@ -276,6 +276,6 @@ const Board = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Board;

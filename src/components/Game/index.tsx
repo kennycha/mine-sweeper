@@ -1,4 +1,4 @@
-import { FocusEventHandler, useCallback, useMemo, useRef, useState } from "react";
+import { FocusEventHandler, memo, useCallback, useMemo, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import classNames from "classnames/bind";
 import { GameModeTypes } from "../../types";
@@ -22,7 +22,7 @@ const MIN_HEIGHT = 8;
 const MAX_HEIGHT = 50;
 const MIN_COUNT = 1;
 
-const Game = () => {
+const Game = memo(() => {
   const gameMode = useSelector((state: RootState) => state.game.mode);
 
   const dispatch = useDispatch();
@@ -185,6 +185,6 @@ const Game = () => {
       )}
     </div>
   );
-};
+});
 
 export default Game;
